@@ -1,0 +1,64 @@
+openapi: 3.0.0
+info:
+  description: Information about international cargo train schedules.
+  version: 1.0.0
+  title: Cargo Train Schedules
+tags:
+  - name: Trains
+paths:
+  "/trains/{country}/{trainNumber}/{productionDate}":
+    get:
+      tags:
+        - Trains
+      description: Returns the schedules of the international cargo trains that a given national train belongs to.
+      operationId: getTrainsByNationalTrain
+      parameters:
+        - name: country
+          in: path
+          description: Country of train
+          required: true
+          schema:
+            type: string
+        - name: trainNumber
+          in: path
+          description: National train number in the given country
+          required: true
+          schema:
+            type: string
+        - name: productionDate
+          in: path
+          description: National production date of the train in the given country
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: Successful retrieval of one or more trains.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Train"
+        "400":
+          description: Invalid country, train number, or production date.
+        "500":
+          description: Unexpected server error.
+          
+servers:
+  - url: http://localhost:8080
+components:
+  schemas:
+    Train:
+      type: object
+      properties:
+        trainId:
+          type: string
+          description: Train ID; internationally unique identifier of a train according to TAF TSI
+          example: "TR218047111-------012019"
+        startDate:
+          type: string
+          format: date
+          description: Start date, i.e., date of first departure in first country
+          example: "2019-02-22"

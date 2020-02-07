@@ -1,0 +1,10 @@
+// Die Dokumentation wird über die api.yaml (Swagger Definition) erstellt und in diesem Dokument zusammengefasst.
+
+
+include::{generated}/overview.adoc[]
+
+include::{generated}/paths.adoc[]
+
+include::{generated}/definitions.adoc[]
+
+include::{generated}/security.adoc[]
